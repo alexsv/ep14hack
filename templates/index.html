@@ -1,1 +1,28 @@
-<h1>routes</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map_canvas {
+        width: 700px;
+        height: 600px;
+        border: 1px solid #ccc;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+  </head>
+  <body>
+    <div id="map_canvas"></div>
+    <script>
+      function initialize() {
+        var mapCanvas = document.getElementById('map_canvas');
+        var mapOptions = {
+          center: new google.maps.LatLng(52.5146462, 13.3966162),
+          zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </body>
+</html>
