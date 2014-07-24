@@ -9,6 +9,7 @@
       }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   </head>
   <body>
     <div id="map_canvas"></div>
@@ -21,8 +22,25 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         var map = new google.maps.Map(mapCanvas, mapOptions);
+        var colors = ['#FF0000', '#00FF00', '#0000FF', '#999900', '#009999', '#990099'];
+        
+        $.get('/api/routes').done(function(data) {
+          $.map(data.results, function(val, i) {
+            var path = new google.maps.Polyline({
+              path: $.map(val.points, function(x) {
+                return new google.maps.LatLng(x.lat, x.lon);
+              }),
+              geodesic: true,
+              strokeColor: colors[i % colors.length],
+              strokeOpacity: 0.7,
+              strokeWeight: 4
+            });
+            
+            path.setMap(map);            
+          });
+        });
       }
-      google.maps.event.addDomListener(window, 'load', initialize);
+      $(document).ready(initialize);
     </script>
   </body>
 </html>
